@@ -1,0 +1,19 @@
+{
+  "name": "guild-derivative",
+  "version": "1.0.0",
+  "description": "Herokuの1Dynoですべてを乗っける大本のやつ。",
+  "main": "waypoint.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satsukizzz/guild-derivative.git"
+  },
+  "author": "satsukizz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/satsukizzz/guild-derivative/issues"
+  },
+  "homepage": "https://github.com/satsukizzz/guild-derivative#readme"
+}
