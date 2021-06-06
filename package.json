@@ -4,7 +4,7 @@
   "description": "Herokuの1Dynoですべてを乗っける大本のやつ。",
   "main": "waypoint.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
   "repository": {
     "type": "git",
