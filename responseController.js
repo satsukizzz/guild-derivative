@@ -12,6 +12,7 @@ class ResponseController {
       // set a new item in the Collection
       // modules must be a function with (request, response, args) arguments, which request and response are http module parameters
       this.modules.push(require(`./waypoint/${waypoint}`));
+    }
   }
 } 
 
