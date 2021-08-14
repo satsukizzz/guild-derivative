@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const waypoint = (request, response, args) => {
     if (request.url == '/waypoint') {
         response.writeHead(200, { "Content-Type": "text/plain" });
