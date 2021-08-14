@@ -4,7 +4,9 @@
   "description": "Herokuの1Dynoですべてを乗っける大本のやつ。",
   "main": "waypoint.js",
   "scripts": {
-    "test": ""
+    "test": "",
+    "build": "tsc",
+    "watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/satsukizzz/guild-derivative/issues"
   },
-  "homepage": "https://github.com/satsukizzz/guild-derivative#readme"
+  "homepage": "https://github.com/satsukizzz/guild-derivative#readme",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/node": "^16.6.1"
+  }
 }
