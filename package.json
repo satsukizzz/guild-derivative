@@ -2,6 +2,9 @@
   "name": "guild-derivative",
   "version": "1.0.0",
   "description": "Herokuの1Dynoですべてを乗っける大本のやつ。",
+  "engines": {
+    "node": "16.x"
+  },
   "main": "waypoint.js",
   "scripts": {
     "test": "",
