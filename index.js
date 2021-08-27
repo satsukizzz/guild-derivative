@@ -6,18 +6,16 @@ const responseController = new ResponseController();
 
 const fs = require('fs');
 const http = require('http');
-if ('development' === process.env?.TARGET_ENV) {
+if ('development' === process.env.TARGET_ENV) {
   const secret = JSON.parse(fs.readFileSync('./secret.json'));
-} else {
-  const secret = null;
 }
 
 const Twitter = require('twitter');
 
 const twitterClient = new Twitter({
-  consumer_key: process.env.TWITTER_CONSUMER_KEY || secret.TWITTER_CONSUMER_KEY,
-  consumer_secret: process.env.TWITTER_CONSUMER_SECRET || secret.TWITTER_CONSUMER_SECRET,
-  access_token_key: process.env.TWITTER_ACCESS_KEY || secret.TWITTER_ACCESS_KEY,
+  consumer_key: process.env.TWITTER_API_KEY || secret.TWITTER_API_KEY,
+  consumer_secret: process.env.TWITTER_API_SECRET_KEY || secret.TWITTER_API_SECRET_KEY,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN || secret.TWITTER_ACCESS_TOKEN,
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET || secret.TWITTER_ACCESS_TOKEN_SECRET
 });
 
