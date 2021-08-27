@@ -6,7 +6,7 @@ const responseController = new ResponseController();
 
 const fs = require('fs');
 const http = require('http');
-if ('development' === process?.env?.TARGET_ENV?) {
+if ('development' === process?.env?.TARGET_ENV) {
   const secret = JSON.parse(fs.readFileSync('./secret.json'));
 }
 
