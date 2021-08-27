@@ -21,12 +21,6 @@ const twitterClient = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET || secret.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-twitterClient.get('favorites/list', function(error, tweets, response) {
-  if(error) throw error;
-  console.log(tweets);  // The favorites.
-  console.log(response);  // Raw response object.
-  webhookClient.send('see what happens.');
-});
 
 let responseFlag = false;
 let args = null;
@@ -68,7 +62,12 @@ client.commands.set('adpost', {
     if((process.env.DISCORD_COMMANDER_CHANNEL_ID || secret.DISCORD_COMMANDER_CHANNEL_ID) !== message.channelId) {
       return;
     }
-    webhookClient.send(message.content.slice('yt adpost'.length));
+    twitterClient.post('statuses/update', {status: `see what happens. :${message.content.slice('yt adpost'.length)}`}, function(error, tweet, response) {
+      if(error) throw error;
+      console.log(tweet);  // The favorites.
+      console.log(response);  // Raw response object.
+      webhookClient.send(`posted successfully. :${message.content.slice('yt adpost'.length)}`);
+    });
   }
 });
 
