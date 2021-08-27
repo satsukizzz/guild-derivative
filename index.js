@@ -6,8 +6,10 @@ const responseController = new ResponseController();
 
 const fs = require('fs');
 const http = require('http');
+
+let secret = null;
 if ('development' === process.env.TARGET_ENV) {
-  const secret = JSON.parse(fs.readFileSync('./secret.json'));
+  secret = JSON.parse(fs.readFileSync('./secret.json'));
 }
 
 const Twitter = require('twitter');
