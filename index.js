@@ -13,10 +13,10 @@ if ('development' === process?.env?.TARGET_ENV) {
 const Twitter = require('twitter');
 
 const twitterClient = new Twitter({
-  consumer_key: process.env.TWITTER_CONSUMER_KEY || secret.TWITTER_CONSUMER_KEY,
-  consumer_secret: process.env.TWITTER_CONSUMER_SECRET || secret.TWITTER_CONSUMER_SECRET,
-  access_token_key: process.env.TWITTER_ACCESS_KEY || secret.TWITTER_ACCESS_KEY,
-  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET || secret.TWITTER_ACCESS_TOKEN_SECRET
+  consumer_key: process.env.TWITTER_CONSUMER_KEY || secret?.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET || secret?.TWITTER_CONSUMER_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_KEY || secret?.TWITTER_ACCESS_KEY,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET || secret?.TWITTER_ACCESS_TOKEN_SECRET
 });
 
 twitterClient.get('favorites/list', function(error, tweets, response) {
@@ -40,16 +40,16 @@ http.createServer((request, response) => {
     response.end();
   }
 })
-.listen(process.env.PORT || secret.PORT);
+.listen(process.env.PORT || secret?.PORT);
 
 
 // discord bot server
 const {Client, Collection, Intents, WebhookClient} = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
 const webhookClient = new WebhookClient({
-  id: process.env.DISCORD_ANNOUNCES_WEBHOOK_ID || secret.DISCORD_ANNOUNCES_WEBHOOK_ID,
-  token: process.env.DISCORD_ANNOUNCES_WEBHOOK_TOKEN || secret.DISCORD_ANNOUNCES_WEBHOOK_TOKEN,
-  url: `https://discord.com/api/webhooks/${process.env.DISCORD_ANNOUNCES_WEBHOOK_ID || secret.DISCORD_ANNOUNCES_WEBHOOK_ID}/${process.env.DISCORD_ANNOUNCES_WEBHOOK_TOKEN || secret.DISCORD_ANNOUNCES_WEBHOOK_TOKEN}`
+  id: process.env.DISCORD_ANNOUNCES_WEBHOOK_ID || secret?.DISCORD_ANNOUNCES_WEBHOOK_ID,
+  token: process.env.DISCORD_ANNOUNCES_WEBHOOK_TOKEN || secret?.DISCORD_ANNOUNCES_WEBHOOK_TOKEN,
+  url: `https://discord.com/api/webhooks/${process.env.DISCORD_ANNOUNCES_WEBHOOK_ID || secret?.DISCORD_ANNOUNCES_WEBHOOK_ID}/${process.env.DISCORD_ANNOUNCES_WEBHOOK_TOKEN || secret?.DISCORD_ANNOUNCES_WEBHOOK_TOKEN}`
 });
 
 client.commands = new Collection();
@@ -63,14 +63,14 @@ client.commands.set('server', {
 
 client.commands.set('adpost', {
   execute(message, args) {
-    if((process.env.DISCORD_COMMANDER_CHANNEL_ID || secret.DISCORD_COMMANDER_CHANNEL_ID) !== message.channelId) {
+    if((process.env.DISCORD_COMMANDER_CHANNEL_ID || secret?.DISCORD_COMMANDER_CHANNEL_ID) !== message.channelId) {
       return;
     }
     webhookClient.send(message.content.slice('yt adpost'.length));
   }
 });
 
-const prefix = process.env.DISCORD_PREFIX || secret.DISCORD_PREFIX;
+const prefix = process.env.DISCORD_PREFIX || secret?.DISCORD_PREFIX;
 
 client.once('ready', () => {
   console.log('bot is ready!');
@@ -96,4 +96,4 @@ client.on('message', async (message) => {
   return;
 });
 
-client.login(process.env.DISCORD_BOT_TOKEN || secret.DISCORD_BOT_TOKEN);
+client.login(process.env.DISCORD_BOT_TOKEN || secret?.DISCORD_BOT_TOKEN);
