@@ -42,7 +42,7 @@ http.createServer((request, response) => {
 // discord bot server
 const {Client, Collection, Intents, WebhookClient} = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
-const webhookClient = new WebhookClient({
+const discordWebhookClient = new WebhookClient({
   id: process.env.DISCORD_ANNOUNCES_WEBHOOK_ID || secret.DISCORD_ANNOUNCES_WEBHOOK_ID,
   token: process.env.DISCORD_ANNOUNCES_WEBHOOK_TOKEN || secret.DISCORD_ANNOUNCES_WEBHOOK_TOKEN,
   url: `https://discord.com/api/webhooks/${process.env.DISCORD_ANNOUNCES_WEBHOOK_ID || secret.DISCORD_ANNOUNCES_WEBHOOK_ID}/${process.env.DISCORD_ANNOUNCES_WEBHOOK_TOKEN || secret.DISCORD_ANNOUNCES_WEBHOOK_TOKEN}`
@@ -63,12 +63,12 @@ client.commands.set('adpost', {
       return;
     }
     
-    twitterClient.post('statuses/update', {status: `see what happens. :${message.content.slice('yt adpost'.length)}`})
-    .then(tweet => {
-      console.log(tweet);  // The favorites.
+    twitterClient.post('statuses/update', {status: message.content.slice('yt adpost '.length)})
+    .then(() => {
+      return discordWebhookClient.send(message.content.slice('yt adpost '.length));
     })
     .then(() => {
-      return webhookClient.send(`posted successfully. :${message.content.slice('yt adpost'.length)}`);
+      console.log('posted successfully.');
     })
     .catch(error => {
       console.log(error);
@@ -85,7 +85,6 @@ client.once('ready', () => {
 // TODO FIX message is deprecated; to messageCreate
 client.on('message', async (message) => {
   // await messageController(message, client, command, prefix); //こんな感じで全部引っ越せるかな
-  console.log(`${message.guildId}, ${message.channelId}`);
   if (message.mentions.has(client.user)) {
     message.reply( `My prefix is "${prefix}" and please add a space after the prefix. If you want to know the functions, type "${prefix} info".`);
     return;
