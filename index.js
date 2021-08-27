@@ -6,7 +6,9 @@ const responseController = new ResponseController();
 
 const fs = require('fs');
 const http = require('http');
-const secret = JSON.parse(fs.readFileSync('./secret.json'));
+if ('development' === process?.env?.TARGET_ENV?) {
+  const secret = JSON.parse(fs.readFileSync('./secret.json'));
+}
 
 const Twitter = require('twitter');
 
@@ -21,6 +23,7 @@ twitterClient.get('favorites/list', function(error, tweets, response) {
   if(error) throw error;
   console.log(tweets);  // The favorites.
   console.log(response);  // Raw response object.
+  webhookClient.send('see what happens.');
 });
 
 let responseFlag = false;
@@ -44,9 +47,9 @@ http.createServer((request, response) => {
 const {Client, Collection, Intents, WebhookClient} = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
 const webhookClient = new WebhookClient({
-  id: secret.DISCORD_ANNOUNCES_WEBHOOK_ID,
-  token: secret.DISCORD_ANNOUNCES_WEBHOOK_TOKEN,
-  url: `https://discord.com/api/webhooks/${secret.DISCORD_ANNOUNCES_WEBHOOK_ID}/${secret.DISCORD_ANNOUNCES_WEBHOOK_TOKEN}`
+  id: process.env.DISCORD_ANNOUNCES_WEBHOOK_ID || secret.DISCORD_ANNOUNCES_WEBHOOK_ID,
+  token: process.env.DISCORD_ANNOUNCES_WEBHOOK_TOKEN || secret.DISCORD_ANNOUNCES_WEBHOOK_TOKEN,
+  url: `https://discord.com/api/webhooks/${process.env.DISCORD_ANNOUNCES_WEBHOOK_ID || secret.DISCORD_ANNOUNCES_WEBHOOK_ID}/${process.env.DISCORD_ANNOUNCES_WEBHOOK_TOKEN || secret.DISCORD_ANNOUNCES_WEBHOOK_TOKEN}`
 });
 
 client.commands = new Collection();
@@ -60,14 +63,14 @@ client.commands.set('server', {
 
 client.commands.set('adpost', {
   execute(message, args) {
-    if(secret.DISCORD_COMMANDER_CHANNEL_ID !== message.channelId) {
+    if((process.env.DISCORD_COMMANDER_CHANNEL_ID || secret.DISCORD_COMMANDER_CHANNEL_ID) !== message.channelId) {
       return;
     }
     webhookClient.send(message.content.slice('yt adpost'.length));
   }
 });
 
-const prefix = secret.DISCORD_PREFIX;
+const prefix = process.env.DISCORD_PREFIX || secret.DISCORD_PREFIX;
 
 client.once('ready', () => {
   console.log('bot is ready!');
