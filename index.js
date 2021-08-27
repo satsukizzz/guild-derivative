@@ -68,12 +68,9 @@ client.commands.set('adpost', {
       console.log(tweet);  // The favorites.
       console.log(response);  // Raw response object.
     })
-    .catch(error => {
-      console.log(error);
-      return;
-    });
-
-    webhookClient.send(`posted successfully. :${message.content.slice('yt adpost'.length)}`)
+    .then(() => {
+      return webhookClient.send(`posted successfully. :${message.content.slice('yt adpost'.length)}`);
+    })
     .catch(error => {
       console.log(error);
       return;
