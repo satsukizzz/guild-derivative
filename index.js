@@ -62,6 +62,7 @@ client.commands.set('adpost', {
     if((process.env.DISCORD_COMMANDER_CHANNEL_ID || secret.DISCORD_COMMANDER_CHANNEL_ID) !== message.channelId) {
       return;
     }
+    
     twitterClient.post('statuses/update', {status: `see what happens. :${message.content.slice('yt adpost'.length)}`}, function(error, tweet, response) {
       if(error) throw error;
       console.log(tweet);  // The favorites.
@@ -71,7 +72,12 @@ client.commands.set('adpost', {
       console.log(error);
       return;
     });
-    webhookClient.send(`posted successfully. :${message.content.slice('yt adpost'.length)}`);
+
+    webhookClient.send(`posted successfully. :${message.content.slice('yt adpost'.length)}`)
+    .catch(error => {
+      console.log(error);
+      return;
+    });
   }
 });
 
