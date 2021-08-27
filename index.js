@@ -63,10 +63,9 @@ client.commands.set('adpost', {
       return;
     }
     
-    twitterClient.post('statuses/update', {status: `see what happens. :${message.content.slice('yt adpost'.length)}`}, function(error, tweet, response) {
-      if(error) throw error;
+    twitterClient.post('statuses/update', {status: `see what happens. :${message.content.slice('yt adpost'.length)}`})
+    .then(tweet => {
       console.log(tweet);  // The favorites.
-      console.log(response);  // Raw response object.
     })
     .then(() => {
       return webhookClient.send(`posted successfully. :${message.content.slice('yt adpost'.length)}`);
