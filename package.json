@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@types/node": "^16.6.1",
-    "discord.js": "^13.1.0"
+    "discord.js": "^13.1.0",
+    "twitter": "^1.7.1"
   }
 }

@@ -8,6 +8,21 @@ const fs = require('fs');
 const http = require('http');
 const secret = JSON.parse(fs.readFileSync('./secret.json'));
 
+const Twitter = require('twitter');
+
+const twitterClient = new Twitter({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY || secret.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET || secret.TWITTER_CONSUMER_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_KEY || secret.TWITTER_ACCESS_KEY,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET || secret.TWITTER_ACCESS_TOKEN_SECRET
+});
+
+twitterClient.get('favorites/list', function(error, tweets, response) {
+  if(error) throw error;
+  console.log(tweets);  // The favorites.
+  console.log(response);  // Raw response object.
+});
+
 let responseFlag = false;
 let args = null;
 
